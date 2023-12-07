@@ -1,0 +1,16 @@
+version: 0.2
+
+phases:
+  install:
+    runtime-versions:
+      docker: 18
+  build:
+    commands:
+      - echo "Build and push Docker images here"
+  post_build:
+    commands:
+      - kubectl apply -f k8s-manifests/ # Apply your Kubernetes manifests
+      - kubectl rollout restart deployment <your-deployment-name> -n <your-namespace> # Trigger a rolling update
+
+artifacts:
+  files: '**/*'
